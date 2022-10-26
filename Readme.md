@@ -2,6 +2,12 @@
 
 An External Scaler for Drone Ci
 
+## Influence Scheduler to remove the idle runners during downscale. 
+- Annotates the idle drone runner pods with the [controller.kubernetes.io/pod-deletion-cost](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#pod-deletion-cost) annotations to influence scheduler during downscaling. 
+- Thus idle pods gets removed when HPA downscales. 
+- This requires Kubnertes version  v1.22 or higher
+
+
 
 ## supported ScaledObject properties 
 - `droneserver` - url for the drone server
@@ -13,6 +19,8 @@ Triggers Supported :
 - [ExternlPush](https://keda.sh/docs/2.8/scalers/external-push/) - WIP 
 
 ## Example [see here](./deploy/sample-scaledobjref.yaml)
+
+
 
 ## TODOS
 
