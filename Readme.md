@@ -1,4 +1,4 @@
-# External KEDA scaler for DRONE
+# External KEDA scaler for [DRONE CI](https://www.drone.io/)
 
 An External Scaler for Drone Ci
 
