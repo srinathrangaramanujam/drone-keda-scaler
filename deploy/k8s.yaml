@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-drone-ext-scaler
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      service: keda-drone-ext-scaler
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: keda-drone-ext-scaler
+    spec:
+      containers:
+      - image: srangaramanujam/drone-keda-scaler:latest
+        name: scaler
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: drone-ext-scaler-service
+    namespace: default
+spec:
+    selector:
+        service: keda-drone-ext-scaler
+    type: ClusterIP
+    ports:
+    - protocol: TCP
+      port: 6000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-drone-runner
+  name: my-drone-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-drone-runner
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: my-drone-runner
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+

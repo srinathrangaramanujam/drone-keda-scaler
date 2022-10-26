@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mydrone-deployx-scaler
+  namespace: default
+spec:
+  pollingInterval: 30   # Optional. Default: 30 seconds
+  cooldownPeriod: 100  # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 30  # Optional. Default: 100 
+  scaleTargetRef:
+    name: my-drone-runner
+  triggers:
+    - type: external
+      metadata:
+        scalerAddress: drone-ext-scaler-service.default.svc.cluster.local:6000
+        droneserver: ""
+        dronetoken: ""
+        minimumPendingBuilds: "1" # no of pending builds that can be in idle state that autoscaler can ignore. desired state
+        metricName: "test_metric"
