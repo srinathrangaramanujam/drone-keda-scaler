@@ -5,7 +5,7 @@ COPY . /app
 WORKDIR /app
 RUN go build .
 
-FROM alpine 
+FROM alpine:3.18.3 
 RUN mkdir /app
 WORKDIR /app
 COPY --from=build /app/drone-keda-scaler .
